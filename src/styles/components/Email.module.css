@@ -1,0 +1,52 @@
+.container {
+  left: 280px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 280px);
+}
+
+.email {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: calc(100vh - 152px);
+}
+
+.email div {
+  height: 100%;
+}
+
+.tools {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tools div {
+  display: flex;
+  justify-content: center;
+  margin: 0.5rem 0;
+}
+
+.tools button:first-child {
+  margin: 0 1rem 0 0;
+}
+
+.tools button:nth-child(2) {
+  margin: 0 .2rem 0 0;
+}
+
+.tools span {
+  font-size: 1vw;
+}
+
+.code {
+  display: flex;
+  margin: 0 1rem;
+}
+
+.code pre {
+  white-space: pre-wrap;
+  word-break: break-all;
+}

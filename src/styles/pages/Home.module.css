@@ -1,0 +1,13 @@
+.mainHeader {
+  border-bottom: 1px solid rgba(var(--border));
+  display: flex;
+  height: 81px;
+  justify-content: space-between;
+}
+
+.mainHeader h1 {
+  align-self: center;
+  color: var(--blue);
+  font-size: 1.5rem;
+  margin: 0 0 0 1rem;
+}
