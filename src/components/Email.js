@@ -1,13 +1,23 @@
-import { useState } from "react"
+import React, { useEffect, useState } from "react"
 import styles from '../styles/components/Email.module.css'
+import hljs from "highlight.js"
 
-
-export default function Email({path, email }) {
+export default function Email({ path, email }){
   const [textButton, setTextButton] = useState('Show code')
   const [frameWidth, setFrameWidth] = useState('100%')
 
+  useEffect(() => {
+    if (isCodeView()) {
+      hljs.highlightAll()
+    }
+  })
+
+  function isCodeView () {
+    return textButton === 'Show email'
+  }
+
   function handleClickButton() {
-    textButton === 'Show code' ? setTextButton('Show email') : setTextButton('Show code')
+    isCodeView() ? setTextButton('Show code') : setTextButton('Show email')
   }
 
   function handleClickDesktopWidth() {
@@ -34,7 +44,6 @@ export default function Email({path, email }) {
               type="button"
               className="btn btn-light"
               onClick={handleClickDesktopWidth}
-              active
               data-bs-toggle="button"
               autoComplete="off"
               aria-pressed="true"
@@ -57,15 +66,15 @@ export default function Email({path, email }) {
           <span>{ path }</span>
         </div>
         <div className={styles.email}>
-          { textButton === 'Show email' ?
+          { isCodeView() ?
             <div className={styles.code}>
               <pre>
-                { email }
+               <code className="language-html">{ email }</code>
               </pre>
             </div>
             :
             <div style={{width: frameWidth}}>
-              <iframe srcDoc={email} allowTransparency="true" background="transparent" frameBorder="0" width="100%" height="100%" />
+              <iframe srcDoc={email} frameBorder="0" width="100%" height="100%" />
             </div>
           }
         </div>

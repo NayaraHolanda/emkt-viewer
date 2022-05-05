@@ -39,6 +39,7 @@
 
 .tools span {
   font-size: 1vw;
+  margin-bottom: 0.5rem;
 }
 
 .code {
@@ -47,6 +48,12 @@
 }
 
 .code pre {
+  background-color: var(--code);
+  border: 1px solid var(--border-code);
   white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.code code {
   word-break: break-all;
 }
