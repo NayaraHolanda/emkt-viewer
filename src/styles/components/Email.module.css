@@ -1,16 +1,17 @@
 .container {
-  left: 280px;
-  position: absolute;
   display: flex;
   flex-direction: column;
+  height: calc(100vh - 81px);
+  min-height: calc(100vh - 81px);
+  left: 280px;
+  position: absolute;
   width: calc(100% - 280px);
 }
 
 .email {
   display: flex;
   justify-content: center;
-  width: 100%;
-  height: calc(100vh - 152px);
+  height: 89.3%;
 }
 
 .email div {
@@ -21,25 +22,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: 10%;
 }
 
-.tools div {
+.tools div:first-child {
   display: flex;
   justify-content: center;
-  margin: 0.5rem 0;
+  margin-bottom: 0.5rem;
 }
 
 .tools button:first-child {
-  margin: 0 1rem 0 0;
-}
-
-.tools button:nth-child(2) {
-  margin: 0 .2rem 0 0;
+  margin: 0 .5rem 0 0;
 }
 
 .tools span {
   font-size: 1vw;
-  margin-bottom: 0.5rem;
 }
 
 .code {
