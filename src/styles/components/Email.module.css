@@ -26,13 +26,13 @@
   height: 10%;
 }
 
-.tools div:first-child {
+.toolsButton {
   display: flex;
   justify-content: center;
   margin-bottom: 0.5rem;
 }
 
-.tools button:first-child {
+.tools button:first-child, .toolsButton button {
   margin: 0 .5rem 0 0;
 }
 

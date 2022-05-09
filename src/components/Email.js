@@ -6,12 +6,22 @@ export default function Email({ path, email }){
   const [showCodeEmailButton, setShowCodeEmailButton] = useState('Show code')
   const [copyButton, setCopyButton] = useState('Copy')
   const [frameWidth, setFrameWidth] = useState('100%')
+  const [developmentTime, setDevelopmentTime] = useState(null)
 
   useEffect(() => {
     if (isCodeView()) {
       hljs.highlightAll()
     }
   })
+
+  useEffect(() => {
+    if (email) {
+      const regExp = /(?<=<!--\s*Time:\s*)\d+(?=\s*-->)/ig
+      let checkDevelopmentTime = email.match(regExp)
+      checkDevelopmentTime ? setDevelopmentTime(checkDevelopmentTime[0]) : setDevelopmentTime(null)
+      console.log(developmentTime);
+    }
+  }, [email, developmentTime])
 
   function isCodeView () {
     return showCodeEmailButton === 'Show email'
@@ -41,7 +51,24 @@ export default function Email({ path, email }){
     email ?
       <div className={styles.container}>
         <div className={styles.tools}>
-          <div>
+          <div className={styles.toolsButton}>
+            {
+              developmentTime ?
+                <div
+                  data-bs-placement="left"
+                  title="Development Time"
+                >
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    disabled
+                  >
+                    { developmentTime } minutes
+                  </button>
+                </div>
+              :
+              <></>
+            }
             <button
               type="button"
               onClick={handleClickShowButton}
@@ -79,6 +106,7 @@ export default function Email({ path, email }){
                 type="button"
                 onClick={handleClickCopyButton}
                 className="btn btn-light btn-sm"
+                style={{cursor: 'copy'}}
               >
                 { copyButton }
               </button>
