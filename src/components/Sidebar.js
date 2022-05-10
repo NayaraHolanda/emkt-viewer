@@ -79,7 +79,7 @@ export default function Sidebar() {
       const images = data.list
 
       images.forEach((image) => {
-        const imageRegExp = new RegExp(`src=".*${image.name}"`)
+        const imageRegExp = new RegExp(`src=".*\/${image.name}"`, 'g')
         const imageUrl = `src="${image.downloadUrl}"`
 
         email = email.replace(imageRegExp, imageUrl)
