@@ -18,16 +18,16 @@ export default function Sidebar() {
 
   const slugify = /\/|\s|\.|&|\(|\)|'/g
 
-  async function requestFiles(path) {
+  async function requestFiles(path, type = 'dir') {
     let _data = null
-    await axios.post('/api/git', { path }).then(({ data }) => {
+    await axios.post('/api/git', { path, type }).then(({ data }) => {
       _data = data
     })
 
     return _data
   }
 
-  async function handleOnClickFile({ path, type, downloadUrl, list }) {
+  async function handleOnClickFile({ path, type, list }) {
     if (type === 'dir') {
       if (!list.length) {
         const data = await requestFiles(path)
@@ -35,6 +35,7 @@ export default function Sidebar() {
         updateList(path, list)
       }
     } else {
+      const downloadUrl = await requestFiles(path, 'file')
       axios.post('/api/email', { email: downloadUrl }).then(({data}) => {
         replaceStaticImages(path, data)
         setPathHtml(path)

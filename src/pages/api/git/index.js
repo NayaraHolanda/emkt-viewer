@@ -12,16 +12,21 @@ export default function handler(req, res) {
       path: req.body.path
     })
     .then(({ data }) => {
-      const list = data.map((item) => {
-        return {
-          name: item.name,
-          path: item.path,
-          type: item.type,
-          downloadUrl: item.download_url,
-          list: []
-        }
-      })
-      res.status(200).json({list})
+      if (req.body.type === 'file') {
+        const downloadUrl = data.download_url
+        res.status(200).json(downloadUrl)
+      } else {
+        const list = data.map((item) => {
+          return {
+            name: item.name,
+            path: item.path,
+            type: item.type,
+            downloadUrl: item.download_url,
+            list: []
+          }
+        })
+        res.status(200).json({list})
+      }
     })
     .catch((e) => {
       res.status(500).send(e)
