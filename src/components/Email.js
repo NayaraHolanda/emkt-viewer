@@ -7,6 +7,7 @@ export default function Email({ path, email }){
   const [copyButton, setCopyButton] = useState('Copy')
   const [frameWidth, setFrameWidth] = useState('100%')
   const [developmentTime, setDevelopmentTime] = useState(null)
+  const [emailFixed, setEmailFixed] = useState(null)
 
   useEffect(() => {
     if (isCodeView()) {
@@ -19,9 +20,17 @@ export default function Email({ path, email }){
       const regExp = /(?<=<!--\s*Time:\s*)\d+(?=\s*-->)/ig
       let checkDevelopmentTime = email.match(regExp)
       checkDevelopmentTime ? setDevelopmentTime(checkDevelopmentTime[0]) : setDevelopmentTime(null)
-      console.log(developmentTime);
     }
   }, [email, developmentTime])
+
+  useEffect(() => {
+    if (email) {
+      const regExp = /@media\s+only\s+screen\s+and\s+\(\s*max-device-width\s*:\s*480px\s*\)\s*,\s*only\s+screen\s+and\s+\(\s*max-width\s*:\s*480px\s*\)/
+      const newWidth = '@media only screen and (max-device-width: 497px), only screen and (max-width: 497px)'
+      const emailNewWidth = email.replace(regExp, newWidth)
+      setEmailFixed(emailNewWidth)
+    }
+  }, [email, emailFixed])
 
   function isCodeView () {
     return showCodeEmailButton === 'Show email'
@@ -44,7 +53,7 @@ export default function Email({ path, email }){
   }
 
   function handleClickMobileWidth() {
-    setFrameWidth(480)
+    setFrameWidth(497)
   }
 
   return (
@@ -123,7 +132,7 @@ export default function Email({ path, email }){
             </div>
             :
             <div style={{width: frameWidth}}>
-              <iframe srcDoc={email} frameBorder="0" width="100%" height="100%" />
+              <iframe srcDoc={emailFixed} frameBorder="0" width="100%" height="100%" />
             </div>
           }
         </div>
