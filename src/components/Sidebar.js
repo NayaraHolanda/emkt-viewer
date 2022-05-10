@@ -16,6 +16,8 @@ export default function Sidebar() {
     })
   }, [])
 
+  const slugify = /\/|\s|\.|&|\(|\)|'/g
+
   async function requestFiles(path) {
     let _data = null
     await axios.post('/api/git', { path }).then(({ data }) => {
@@ -114,7 +116,7 @@ export default function Sidebar() {
               type="button"
               aria-expanded="false"
               data-bs-placement="right"
-              data-bs-target={`#${item.path.replaceAll(/\/|\s/g, '-')}`}
+              data-bs-target={`#${item.path.replaceAll(slugify, '-')}`}
               data-bs-toggle="collapse"
               title={item.name}
               className={styles.btn}
@@ -122,7 +124,7 @@ export default function Sidebar() {
             >
               <span className={styles.ellipsis}>{item.name}</span>
             </button>
-            <ul className={`collapse ${styles.list}`} id={item.path.replaceAll(/\/|\s/g, '-')}>
+            <ul className={`collapse ${styles.list}`} id={item.path.replaceAll(slugify, '-')}>
               <li>
                 {item.list && item.list.length ? createList(item.list) : ''}
               </li>
