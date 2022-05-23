@@ -1,5 +1,4 @@
-import db from "../../../../db.json"
-
+import db from "../../../../../.credentials/db.json"
 import { Octokit } from "@octokit/rest"
 
 export default function handler(req, res) {

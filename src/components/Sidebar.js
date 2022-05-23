@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from "react"
 import axios from "axios"
-import db from "../../db.json"
+import db from "../../../.credentials/db.json"
 import Email from "./Email"
 import styles from '../styles/components/Sidebar.module.css'
 
