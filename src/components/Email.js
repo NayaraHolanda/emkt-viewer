@@ -1,13 +1,14 @@
+import hljs from "highlight.js"
 import React, { useEffect, useState } from "react"
 import styles from '../styles/components/Email.module.css'
-import hljs from "highlight.js"
 
-export default function Email({ path, email }){
-  const [showCodeEmailButton, setShowCodeEmailButton] = useState('Show code')
+export default function Email({ path, email, visibleAreaSize }){
   const [copyButton, setCopyButton] = useState('Copy')
-  const [frameWidth, setFrameWidth] = useState('100%')
   const [developmentTime, setDevelopmentTime] = useState(null)
   const [emailFixed, setEmailFixed] = useState(null)
+  const [frameWidth, setFrameWidth] = useState('100%')
+  const [showCodeEmailButton, setShowCodeEmailButton] = useState('Show code')
+  const pathFixed = path?.replace('clients/', '').replaceAll('/', ' > ')
 
   useEffect(() => {
     if (isCodeView()) {
@@ -32,20 +33,12 @@ export default function Email({ path, email }){
     }
   }, [email, emailFixed])
 
-  function isCodeView () {
-    return showCodeEmailButton === 'Show email'
-  }
-
   function handleClickShowButton() {
     isCodeView() ? setShowCodeEmailButton('Show code') : setShowCodeEmailButton('Show email')
   }
 
-  function handleClickCopyButton() {
-    setCopyButton('Copied!')
-    navigator.clipboard.writeText(email)
-    setTimeout(() => {
-      setCopyButton('Copy')
-    }, "5000")
+  function isCodeView () {
+    return showCodeEmailButton === 'Show email'
   }
 
   function handleClickDesktopWidth() {
@@ -56,15 +49,25 @@ export default function Email({ path, email }){
     setFrameWidth(497)
   }
 
+  function handleClickCopyButton() {
+    setCopyButton('Copied!')
+    navigator.clipboard.writeText(email)
+    setTimeout(() => {
+      setCopyButton('Copy')
+    }, "5000")
+  }
+
   return (
     email ?
-      <div className={styles.container}>
+      <div
+        className={styles.container}
+        style={{width: `calc(100% - ${visibleAreaSize}px - 5px)`}}
+      >
         <div className={styles.tools}>
           <div className={styles.toolsButton}>
             {
               developmentTime ?
                 <div
-                  data-bs-placement="left"
                   title="Development Time"
                 >
                   <button
@@ -121,18 +124,16 @@ export default function Email({ path, email }){
               </button>
             }
           </div>
-          <span>{ path }</span>
+          <span title={pathFixed}>{ pathFixed }</span>
         </div>
         <div className={styles.email}>
           { isCodeView() ?
-            <div className={styles.code}>
-              <pre>
-               <code className="language-html">{ email }</code>
-              </pre>
-            </div>
+            <pre className={styles.code}>
+              <code className="language-html">{ email }</code>
+            </pre>
             :
             <div style={{width: frameWidth}}>
-              <iframe srcDoc={emailFixed} frameBorder="0" width="100%" height="100%" />
+              <iframe srcDoc={emailFixed} frameBorder="0" width="100%" height="100%" style={{pointerEvents: 'none', display: 'block'}} />
             </div>
           }
         </div>

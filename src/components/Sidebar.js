@@ -1,46 +1,65 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef, useCallback } from "react"
 import axios from "axios"
 import db from "../../db.json"
-import styles from '../styles/components/Sidebar.module.css'
 import Email from "./Email"
+import styles from '../styles/components/Sidebar.module.css'
 
 export default function Sidebar() {
-
-  const [list, setList] = useState([])
   const [html, setHtml] = useState(null)
+  const [isResizing, setIsResizing] = useState(false)
+  const [list, setList] = useState([])
   const [pathHtml, setPathHtml] = useState(null)
+  const [sidebarWidth, setSidebarWidth] = useState(260)
+  const mainAreaSelect = useRef(null)
+  const sidebarRef = useRef(null)
+  const slugify = /\/|\s|\.|&|\(|\)|'/g
 
-  useEffect(() => {
-    axios.post('/api/git', {path: db.basePath}).then(({ data }) => {
-      setList(data.list)
-    })
+  const startResizing = useCallback((mouseDownEvent) => {
+    setIsResizing(true)
+    mainAreaSelect.current.style.userSelect = 'none'
   }, [])
 
-  const slugify = /\/|\s|\.|&|\(|\)|'/g
+  const resize = useCallback(
+    (mouseMoveEvent) => {
+      if (isResizing) {
+        setSidebarWidth(
+          mouseMoveEvent.clientX -
+            sidebarRef.current.getBoundingClientRect().left
+        )
+      }
+    }, [isResizing]
+  )
+
+  const stopResizing = useCallback(() => {
+    setIsResizing(false)
+    mainAreaSelect.current.style.userSelect = 'auto'
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener("mousemove", resize)
+    window.addEventListener("mouseup", stopResizing)
+    return () => {
+      window.removeEventListener("mousemove", resize)
+      window.removeEventListener("mouseup", stopResizing)
+    }
+  }, [resize, stopResizing])
+
+  useEffect(() => {
+    mainAreaSelect.current = document.getElementById('mainArea')
+    axios.post('/api/git', {path: db.basePath})
+      .then(({ data }) => {
+        setList(data.list)
+      })
+  }, [])
 
   async function requestFiles(path, type = 'dir') {
     let _data = null
-    await axios.post('/api/git', { path, type }).then(({ data }) => {
-      _data = data
-    })
+    await axios.post('/api/git', { path, type })
+      .then(({ data }) => {
+        _data = data
+      })
 
     return _data
-  }
-
-  async function handleOnClickFile({ path, type, list }) {
-    if (type === 'dir') {
-      if (!list.length) {
-        const data = await requestFiles(path)
-        const list = checkImagesFolder(data.list)
-        updateList(path, list)
-      }
-    } else {
-      const downloadUrl = await requestFiles(path, 'file')
-      axios.post('/api/email', { email: downloadUrl }).then(({data}) => {
-        replaceStaticImages(path, data)
-        setPathHtml(path)
-      })
-    }
   }
 
   function checkImagesFolder(subList){
@@ -107,6 +126,23 @@ export default function Sidebar() {
     setList([..._list])
   }
 
+  async function handleOnClickFile({ path, type, list }) {
+    if (type === 'dir') {
+      if (!list.length) {
+        const data = await requestFiles(path)
+        const list = checkImagesFolder(data.list)
+        updateList(path, list)
+      }
+    } else {
+      const downloadUrl = await requestFiles(path, 'file')
+      axios.post('/api/email', { email: downloadUrl })
+        .then(({data}) => {
+          replaceStaticImages(path, data)
+          setPathHtml(path)
+        })
+    }
+  }
+
   function createList(list) {
     return list.map((item, index) => {
       return (
@@ -152,14 +188,18 @@ export default function Sidebar() {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.sidebar}>
+    <div style={{display: 'flex'}} id="mainArea">
+      <div
+        ref={sidebarRef}
+        className={styles.sidebar}
+        style={{width: sidebarWidth}}
+      >
         <div>
           { createList(list) }
         </div>
-        {/* <div className={styles.divider}></div> */}
       </div>
-      <Email path={pathHtml} email={html} />
+      <div className={styles.divider} onMouseDown={startResizing}></div>
+      <Email path={pathHtml} email={html} visibleAreaSize={sidebarWidth} />
     </div>
   )
 }
