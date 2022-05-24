@@ -11,3 +11,16 @@
   font-size: 1.5rem;
   margin: 0 0 0 1rem;
 }
+
+.mainHeader > span {
+  height: 80px !important;
+  position: static !important;
+  width: 200px !important;
+}
+
+.image {
+  height: unset !important;
+  min-height: unset !important;
+  object-fit: contain;
+  position: relative !important;
+}

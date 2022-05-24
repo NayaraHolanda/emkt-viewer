@@ -13,7 +13,7 @@ export default function Home() {
         </Head>
         <header className={styles.mainHeader}>
           <h1>Email Marketing Viewer</h1>
-          <Image src="/logo.png" alt="A Madre" width="200" height="80" />
+          <Image src="/logo.png" alt="A Madre" layout="fill" className={styles.image} />
         </header>
       </div>
       <div>
