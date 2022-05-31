@@ -199,7 +199,7 @@ export default function Sidebar() {
         </div>
       </div>
       <div className={styles.divider} onMouseDown={startResizing}></div>
-      <Email path={pathHtml} email={html} visibleAreaSize={sidebarWidth} />
+      <Email path={pathHtml} email={html} visibleAreaSize={sidebarWidth} isResizing={isResizing} />
     </div>
   )
 }

@@ -1,16 +1,29 @@
 import axios from "axios"
 import emailonacid from "../../../.credentials/emailonacid.json"
 import hljs from "highlight.js"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import styles from '../styles/components/Email.module.css'
 
-export default function Email({ path, email, visibleAreaSize }){
+export default function Email({ path, email, visibleAreaSize, isResizing }){
   const [copyButton, setCopyButton] = useState('Copy')
   const [developmentTime, setDevelopmentTime] = useState(null)
   const [emailFixed, setEmailFixed] = useState(null)
   const [frameWidth, setFrameWidth] = useState('100%')
   const [showCodeEmailButton, setShowCodeEmailButton] = useState('Show code')
   const pathFixed = path?.replace('clients/', '').replaceAll('/', ' > ')
+  const iframePointerEvents = useRef(null)
+
+  useEffect(() => {
+    iframePointerEvents.current = document.getElementById('mainFrame')
+
+    if (iframePointerEvents.current !== null) {
+      if (isResizing) {
+        iframePointerEvents.current.style.pointerEvents = 'none'
+      } else {
+        iframePointerEvents.current.style.pointerEvents = 'auto'
+      }
+    }
+  }, [isResizing])
 
   useEffect(() => {
     if (isCodeView()) {
@@ -170,7 +183,7 @@ export default function Email({ path, email, visibleAreaSize }){
             </pre>
             :
             <div style={{width: frameWidth}}>
-              <iframe srcDoc={emailFixed} frameBorder="0" width="100%" height="100%" style={{pointerEvents: 'none', display: 'block'}} />
+              <iframe id="mainFrame" srcDoc={emailFixed} frameBorder="0" width="100%" height="100%" style={{display: 'block'}} />
             </div>
           }
         </div>
