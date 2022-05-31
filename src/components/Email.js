@@ -1,3 +1,5 @@
+import axios from "axios"
+import emailonacid from "../../../.credentials/emailonacid.json"
 import hljs from "highlight.js"
 import React, { useEffect, useState } from "react"
 import styles from '../styles/components/Email.module.css'
@@ -32,6 +34,33 @@ export default function Email({ path, email, visibleAreaSize }){
       setEmailFixed(emailNewWidth)
     }
   }, [email, emailFixed])
+
+  const headers = {
+    Authorization: `Basic ${emailonacid.auth}`,
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+  }
+
+  function handleClickTestButton() {
+    const pathSplit = path.split('/')
+    const client = pathSplit[2]
+    const filename = pathSplit.pop().split('.')[0]
+    const body = {
+      "subject": `${client} | ${filename}`,
+      "html": email
+    }
+
+    axios.post('https://api.emailonacid.com/v5/email/tests', body, { headers })
+      .then(function (res) {
+        window.open(
+          `https://app.emailonacid.com/app/acidtest/${res.data.id}/list`,
+          '_blank'
+        )
+      })
+      .catch(function (error) {
+        console.error(error)
+      })
+  }
 
   function handleClickShowButton() {
     isCodeView() ? setShowCodeEmailButton('Show code') : setShowCodeEmailButton('Show email')
@@ -81,6 +110,14 @@ export default function Email({ path, email, visibleAreaSize }){
               :
               <></>
             }
+            <button
+              type="button"
+              onClick={handleClickTestButton}
+              className="btn btn-secondary btn-sm"
+              title="See tests"
+            >
+              Email on acid
+            </button>
             <button
               type="button"
               onClick={handleClickShowButton}
