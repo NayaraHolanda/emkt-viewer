@@ -91,7 +91,7 @@ export default function Email({ path, email, visibleAreaSize, isResizing }){
     let b = document.getElementById("botao2")
     let c = document.getElementById("botao3")
     b.style.color = '#18c1d8'
-    c.style.color = '#cccccc'
+    c.style.color = '#b6a3a3'
     setFrameWidth('100%')
   }
 
@@ -99,7 +99,7 @@ export default function Email({ path, email, visibleAreaSize, isResizing }){
     let c = document.getElementById("botao3")
     let b = document.getElementById("botao2")
     c.style.color = '#18c1d8'
-    b.style.color = '#cccccc'
+    b.style.color = '#b6a3a3'
     setFrameWidth(497)
   }
 

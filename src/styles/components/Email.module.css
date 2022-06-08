@@ -22,7 +22,6 @@
   background-color: #cccccc;
   color: #000000;
   border: solid 2px #000000;
-  box-shadow: 0 5px 5px 0 rgba(0,0,0,0.24), 0 5px 5px 0 rgba(0,0,0,0.19);
 }
 
 
@@ -42,7 +41,6 @@
 .botao:hover{
   background: #cccccc;
   color: #000000;
-  box-shadow: 0 5px 5px 0 rgba(0,0,0,0.24), 0 5px 5px 0 rgba(0,0,0,0.19);
 }
 
 .botaoDesktop {
@@ -79,7 +77,6 @@
   background: #cccccc;
   color: #000000;
   border: solid 2px #000000;
-  box-shadow: 0 5px 5px 0 rgba(0,0,0,0.24), 0 5px 5px 0 rgba(0,0,0,0.19);
 }
 
 
