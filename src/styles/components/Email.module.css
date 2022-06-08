@@ -5,6 +5,84 @@
   min-width: calc(100vw - 50%);
 }
 
+.botaoAcid{
+  width: 140px;
+  padding: 5px 0 5px 0;
+  background: #ffffff;
+  color: #18c1d8;
+  font-size: 17px;
+  font-weight: bold;
+  border: solid 2px #18c1d8;
+  border-radius: 10px;
+  transition: 0.5s all;
+  cursor: pointer;
+}
+
+.botaoAcid:hover{
+  background-color: #cccccc;
+  color: #000000;
+  border: solid 2px #000000;
+  box-shadow: 0 5px 5px 0 rgba(0,0,0,0.24), 0 5px 5px 0 rgba(0,0,0,0.19);
+}
+
+
+.botao {
+  width: 140px;
+  padding: 5px 0 5px 0;
+  background: #ffffff;
+  color: #18c1d8;
+  font-size: 17px;
+  font-weight: bold;
+  border: solid 2px;
+  border-radius: 10px;
+  transition: 0.5s all;
+  cursor: pointer;
+}
+
+.botao:hover{
+  background: #cccccc;
+  color: #000000;
+  box-shadow: 0 5px 5px 0 rgba(0,0,0,0.24), 0 5px 5px 0 rgba(0,0,0,0.19);
+}
+
+.botaoDesktop {
+  width: 50px;
+  padding: 5px 0 5px 0;
+  background: #ffffff;
+  color: #18c1d8;
+  font-size: 17px;
+  border: solid 2px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.5s all;
+}
+
+.botaoMobile {
+  width: 50px;
+  padding: 5px 0 5px 0;
+  background: #ffffff;
+  font-size: 17px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: solid 2px;
+  color: #cccccc;
+  transition: 0.5s all;
+}
+
+.darkmode {
+  background-color: #18c1d8;
+  color: #ffffff;
+  border: solid 2px #18c1d8;
+}
+
+.darkmode:hover{
+  background: #cccccc;
+  color: #000000;
+  border: solid 2px #000000;
+  box-shadow: 0 5px 5px 0 rgba(0,0,0,0.24), 0 5px 5px 0 rgba(0,0,0,0.19);
+}
+
+
 .email {
   display: flex;
   height: calc(100% - 86px);

@@ -55,6 +55,7 @@ export default function Email({ path, email, visibleAreaSize, isResizing }){
   }
 
   function handleClickTestButton() {
+    let d = document.getElementById("botaoEmailOnAcid")
     const pathSplit = path.split('/')
     const client = pathSplit[2]
     const filename = pathSplit.pop().split('.')[0]
@@ -75,7 +76,10 @@ export default function Email({ path, email, visibleAreaSize, isResizing }){
       })
   }
 
+
   function handleClickShowButton() {
+    let a = document.getElementById("botao1")
+    a.classList.toggle(styles.darkmode);
     isCodeView() ? setShowCodeEmailButton('Show code') : setShowCodeEmailButton('Show email')
   }
 
@@ -84,10 +88,18 @@ export default function Email({ path, email, visibleAreaSize, isResizing }){
   }
 
   function handleClickDesktopWidth() {
+    let b = document.getElementById("botao2")
+    let c = document.getElementById("botao3")
+    b.style.color = '#18c1d8'
+    c.style.color = '#cccccc'
     setFrameWidth('100%')
   }
 
   function handleClickMobileWidth() {
+    let c = document.getElementById("botao3")
+    let b = document.getElementById("botao2")
+    c.style.color = '#18c1d8'
+    b.style.color = '#cccccc'
     setFrameWidth(497)
   }
 
@@ -124,37 +136,45 @@ export default function Email({ path, email, visibleAreaSize, isResizing }){
               <></>
             }
             <button
+              id = "botaoEmailOnAcid"
+              className={styles.botaoAcid}
               type="button"
               onClick={handleClickTestButton}
-              className="btn btn-secondary btn-sm"
+              //className="btn btn-secondary btn-sm"
               title="See tests"
             >
               Email on acid
             </button>
             <button
+              id = "botao1"
+              className={styles.botao}
               type="button"
               onClick={handleClickShowButton}
-              className="btn btn-outline-dark btn-sm"
+              //className="btn btn-outline-dark btn-sm"
             >
               { showCodeEmailButton }
             </button>
             { !isCodeView() ?
               <div>
                 <button
+                id="botao2"
+                className={styles.botaoDesktop}
                 type="button"
-                className="btn btn-light"
+                //className="btn btn-light"
                 onClick={handleClickDesktopWidth}
-                data-bs-toggle="button"
-                autoComplete="off"
-                aria-pressed="true"
+                //data-bs-toggle="button"
+                //autoComplete="off"
+                //aria-pressed="true"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pc-display-horizontal" viewBox="0 0 16 16">
                     <path d="M1.5 0A1.5 1.5 0 0 0 0 1.5v7A1.5 1.5 0 0 0 1.5 10H6v1H1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-5v-1h4.5A1.5 1.5 0 0 0 16 8.5v-7A1.5 1.5 0 0 0 14.5 0h-13Zm0 1h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .5-.5ZM12 12.5a.5.5 0 1 1 1 0 .5.5 0 0 1-1 0Zm2 0a.5.5 0 1 1 1 0 .5.5 0 0 1-1 0ZM1.5 12h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1ZM1 14.25a.25.25 0 0 1 .25-.25h5.5a.25.25 0 1 1 0 .5h-5.5a.25.25 0 0 1-.25-.25Z"/>
                   </svg>
                 </button>
                 <button
+                  id="botao3"
+                  className={styles.botaoMobile}
                   type="button"
-                  className="btn btn-light"
+                  //className="btn btn-light"
                   onClick={handleClickMobileWidth}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-phone" viewBox="0 0 16 16">
