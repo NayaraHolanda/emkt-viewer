@@ -1,0 +1,22 @@
+.boxContent {
+  padding: 2rem;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.client {
+  background-color: transparent;
+  border-radius: 40px;
+  border: 1px solid var(--border-client-builder);
+  color: var(--text-client-builder);
+  padding: .375rem 1rem .375rem 1rem;
+}
+
+.client:hover {
+  background-color: var(--bg-client-hover-builder);
+}
