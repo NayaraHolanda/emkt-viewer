@@ -1,0 +1,47 @@
+.mainHeader {
+  border-bottom: 1px solid rgba(var(--border));
+  display: flex;
+  height: 81px;
+  justify-content: space-between;
+}
+
+.mainHeader > nav {
+  display: flex;
+  align-items: center;
+}
+
+.mainHeader > nav > ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin-bottom: 0;
+  padding-left: 1rem;
+}
+
+.mainHeader > nav > ul > li {
+  padding-right: 1rem;
+}
+
+.link a {
+  text-decoration: none;
+  color: var(--link);
+  font-size: 1.2rem;
+}
+
+.link a:hover {
+  text-decoration: underline;
+  color: var(--blue);
+}
+
+.mainHeader > span {
+  height: 80px !important;
+  position: relative !important;
+  width: 200px !important;
+}
+
+.image {
+  height: unset !important;
+  min-height: unset !important;
+  object-fit: contain;
+  position: relative !important;
+}
