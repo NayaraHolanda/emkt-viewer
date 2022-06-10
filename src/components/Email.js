@@ -55,7 +55,7 @@ export default function Email({ path, email, visibleAreaSize, isResizing }){
   }
 
   function handleClickTestButton() {
-    let d = document.getElementById("botaoEmailOnAcid")
+    let botaoOnAcid = document.getElementById("botaoEmailOnAcid")
     const pathSplit = path.split('/')
     const client = pathSplit[2]
     const filename = pathSplit.pop().split('.')[0]
@@ -78,8 +78,8 @@ export default function Email({ path, email, visibleAreaSize, isResizing }){
 
 
   function handleClickShowButton() {
-    let a = document.getElementById("botao1")
-    a.classList.toggle(styles.darkmode);
+    let botao1 = document.getElementById("botao1")
+    botao1.classList.toggle(styles.darkmode);
     isCodeView() ? setShowCodeEmailButton('Show code') : setShowCodeEmailButton('Show email')
   }
 
@@ -88,18 +88,51 @@ export default function Email({ path, email, visibleAreaSize, isResizing }){
   }
 
   function handleClickDesktopWidth() {
-    let b = document.getElementById("botao2")
-    let c = document.getElementById("botao3")
-    b.style.color = '#18c1d8'
-    c.style.color = '#cccccc'
+    let botao2 = document.getElementById("botao2")
+    let botao3 = document.getElementById("botao3")
+    botao2.addEventListener('mouseout', function () {
+      botao2.style.background = '#ffffff'
+      botao2.style.color = '#18c1d8'
+    })
+    botao2.addEventListener('mousemove', function () {
+      botao2.style.background = '#ffffff'
+      botao2.style.color = '#18c1d8'
+    })
+    botao3.addEventListener('mousemove', function () {
+      botao3.style.background = '#f0e9e9'
+      botao3.style.color = '#000000'
+    })
+    botao3.addEventListener('mouseout', function () {
+      botao3.style.background = '#ffffff'
+      botao3.style.color = '#cccccc'
+    })
+    botao2.style.color = '#18c1d8'
+    botao3.style.color = '#cccccc'
     setFrameWidth('100%')
   }
 
   function handleClickMobileWidth() {
-    let c = document.getElementById("botao3")
-    let b = document.getElementById("botao2")
-    c.style.color = '#18c1d8'
-    b.style.color = '#cccccc'
+    let botao3 = document.getElementById("botao3")
+    let botao2 = document.getElementById("botao2")
+    botao2.addEventListener('mousemove', function () {
+      botao2.style.background = '#f0e9e9'
+      botao2.style.color = '#000000'
+    })
+    botao3.addEventListener('mousemove', function () {
+      botao3.style.background = '#ffffff'
+      botao3.style.color = '#18c1d8'
+    })
+    botao2.addEventListener('mouseout', function () {
+      botao2.style.background = '#ffffff'
+      botao2.style.color = '#cccccc'
+    })
+    botao3.addEventListener('mouseout', function () {
+      botao3.style.background = '#ffffff'
+      botao3.style.color = '#18c1d8'
+    })
+
+    botao3.style.color = '#18c1d8'
+    botao2.style.color = '#cccccc'
     setFrameWidth(497)
   }
 

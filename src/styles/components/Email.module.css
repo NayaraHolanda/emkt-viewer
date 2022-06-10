@@ -19,7 +19,7 @@
 }
 
 .botaoAcid:hover{
-  background-color: #cccccc;
+  background-color: #f0e9e9;
   color: #000000;
   border: solid 2px #000000;
 }
@@ -39,7 +39,7 @@
 }
 
 .botao:hover{
-  background: #cccccc;
+  background: #f0e9e9;
   color: #000000;
   border: solid 2px #000000;
 }
@@ -75,7 +75,7 @@
 }
 
 .darkmode:hover{
-  background: #cccccc;
+  background: #f0e9e9;
   color: #000000;
   border: solid 2px #000000;
 }
