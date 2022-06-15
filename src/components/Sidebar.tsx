@@ -1,7 +1,7 @@
-import { useEffect, useState, useRef, useCallback } from "react"
-import axios from "axios"
-import db from "../../../.credentials/db.json"
-import Email from "./Email"
+import { useEffect, useState, useRef, useCallback } from 'react'
+import axios from 'axios'
+import db from '../../../.credentials/db.json'
+import Email from './Email'
 import styles from '../styles/components/Sidebar.module.css'
 
 export default function Sidebar() {
@@ -14,7 +14,7 @@ export default function Sidebar() {
   const sidebarRef = useRef(null)
   const slugify = /\/|\s|\.|&|\(|\)|'/g
 
-  const startResizing = useCallback((mouseDownEvent) => {
+  const startResizing = useCallback(() => {
     setIsResizing(true)
     mainAreaSelect.current.style.userSelect = 'none'
   }, [])
@@ -24,7 +24,7 @@ export default function Sidebar() {
       if (isResizing) {
         setSidebarWidth(
           mouseMoveEvent.clientX -
-            sidebarRef.current.getBoundingClientRect().left
+          sidebarRef.current.getBoundingClientRect().left
         )
       }
     }, [isResizing]
@@ -36,17 +36,17 @@ export default function Sidebar() {
   }, [])
 
   useEffect(() => {
-    window.addEventListener("mousemove", resize)
-    window.addEventListener("mouseup", stopResizing)
+    window.addEventListener('mousemove', resize)
+    window.addEventListener('mouseup', stopResizing)
     return () => {
-      window.removeEventListener("mousemove", resize)
-      window.removeEventListener("mouseup", stopResizing)
+      window.removeEventListener('mousemove', resize)
+      window.removeEventListener('mouseup', stopResizing)
     }
   }, [resize, stopResizing])
 
   useEffect(() => {
     mainAreaSelect.current = document.getElementById('mainArea')
-    axios.post('/api/git', {path: db.basePath})
+    axios.post('/api/git', { path: db.basePath })
       .then(({ data }) => {
         setList(data.list)
       })

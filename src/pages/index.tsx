@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Head from "next/head"
+import Head from 'next/head'
 import Navbar from '../components/Navbar'
-import Sidebar from "../components/Sidebar"
+import Sidebar from '../components/Sidebar'
 
 export default function Home() {
   return (

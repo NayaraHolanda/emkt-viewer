@@ -21,7 +21,7 @@
   background: #c1c3c5b4;
 }
 
-.sidebar div:first-child{
+.sidebar div:first-child {
   display: flex;
   flex-direction: column;
   margin: 1rem .5rem 0 0;
@@ -39,7 +39,7 @@
 
 .sidebar ul li {
   list-style: none;
-  margin-bottom: 0.25rem!important;
+  margin-bottom: 0.25rem !important;
 }
 
 .btn {

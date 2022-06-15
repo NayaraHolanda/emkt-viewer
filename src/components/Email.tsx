@@ -1,29 +1,36 @@
-import axios from "axios"
-import emailonacid from "../../../.credentials/emailonacid.json"
-import hljs from "highlight.js"
-import React, { useEffect, useRef, useState } from "react"
+import axios from 'axios'
+import emailonacid from '../../../.credentials/emailonacid.json'
+import hljs from 'highlight.js'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from '../styles/components/Email.module.css'
 
-export default function Email({ path, email, visibleAreaSize, isResizing }){
+interface EmailProps {
+  path: string
+  email: string
+  visibleAreaSize: number
+  isResizing: boolean
+}
+
+export default function Email(props: EmailProps) {
   const [copyButton, setCopyButton] = useState('Copy')
   const [developmentTime, setDevelopmentTime] = useState(null)
   const [emailFixed, setEmailFixed] = useState(null)
   const [frameWidth, setFrameWidth] = useState('100%')
   const [showCodeEmailButton, setShowCodeEmailButton] = useState('Show code')
-  const pathFixed = path?.replace('clients/', '').replaceAll('/', ' > ')
+  const pathFixed = props.path?.replace('clients/', '').replaceAll('/', ' > ')
   const iframePointerEvents = useRef(null)
 
   useEffect(() => {
     iframePointerEvents.current = document.getElementById('mainFrame')
 
     if (iframePointerEvents.current !== null) {
-      if (isResizing) {
+      if (props.isResizing) {
         iframePointerEvents.current.style.pointerEvents = 'none'
       } else {
         iframePointerEvents.current.style.pointerEvents = 'auto'
       }
     }
-  }, [isResizing])
+  }, [props.isResizing])
 
   useEffect(() => {
     if (isCodeView()) {
@@ -32,21 +39,21 @@ export default function Email({ path, email, visibleAreaSize, isResizing }){
   })
 
   useEffect(() => {
-    if (email) {
+    if (props.email) {
       const regExp = /(?<=<!--\s*Time:\s*)\d+(?=\s*-->)/ig
-      let checkDevelopmentTime = email.match(regExp)
+      const checkDevelopmentTime = props.email.match(regExp)
       checkDevelopmentTime ? setDevelopmentTime(checkDevelopmentTime[0]) : setDevelopmentTime(null)
     }
-  }, [email, developmentTime])
+  }, [props.email, developmentTime])
 
   useEffect(() => {
-    if (email) {
+    if (props.email) {
       const regExp = /@media\s+only\s+screen\s+and\s+\(\s*max-device-width\s*:\s*480px\s*\)\s*,\s*only\s+screen\s+and\s+\(\s*max-width\s*:\s*480px\s*\)/
       const newWidth = '@media only screen and (max-device-width: 497px), only screen and (max-width: 497px)'
-      const emailNewWidth = email.replace(regExp, newWidth)
+      const emailNewWidth = props.email.replace(regExp, newWidth)
       setEmailFixed(emailNewWidth)
     }
-  }, [email, emailFixed])
+  }, [props.email, emailFixed])
 
   const headers = {
     Authorization: `Basic ${emailonacid.auth}`,
@@ -55,13 +62,13 @@ export default function Email({ path, email, visibleAreaSize, isResizing }){
   }
 
   function handleClickTestButton() {
-    let botaoOnAcid = document.getElementById("botaoEmailOnAcid")
-    const pathSplit = path.split('/')
+    let botaoOnAcid = document.getElementById('botaoEmailOnAcid')
+    const pathSplit = props.path.split('/')
     const client = pathSplit[2]
     const filename = pathSplit.pop().split('.')[0]
     const body = {
-      "subject": `${client} | ${filename}`,
-      "html": email
+      'subject': `${client} | ${filename}`,
+      'html': props.email
     }
 
     axios.post('https://api.emailonacid.com/v5/email/tests', body, { headers })
@@ -78,18 +85,18 @@ export default function Email({ path, email, visibleAreaSize, isResizing }){
 
 
   function handleClickShowButton() {
-    let botao1 = document.getElementById("botao1")
-    botao1.classList.toggle(styles.darkmode);
+    let botao1 = document.getElementById('botao1')
+    botao1.classList.toggle(styles.darkmode)
     isCodeView() ? setShowCodeEmailButton('Show code') : setShowCodeEmailButton('Show email')
   }
 
-  function isCodeView () {
+  function isCodeView() {
     return showCodeEmailButton === 'Show email'
   }
 
   function handleClickDesktopWidth() {
-    let botao2 = document.getElementById("botao2")
-    let botao3 = document.getElementById("botao3")
+    let botao2 = document.getElementById('botao2')
+    let botao3 = document.getElementById('botao3')
     botao2.addEventListener('mouseout', function () {
       botao2.style.background = '#ffffff'
       botao2.style.color = '#18c1d8'
@@ -112,8 +119,8 @@ export default function Email({ path, email, visibleAreaSize, isResizing }){
   }
 
   function handleClickMobileWidth() {
-    let botao3 = document.getElementById("botao3")
-    let botao2 = document.getElementById("botao2")
+    let botao3 = document.getElementById('botao3')
+    let botao2 = document.getElementById('botao2')
     botao2.addEventListener('mousemove', function () {
       botao2.style.background = '#f0e9e9'
       botao2.style.color = '#000000'
@@ -133,22 +140,22 @@ export default function Email({ path, email, visibleAreaSize, isResizing }){
 
     botao3.style.color = '#18c1d8'
     botao2.style.color = '#cccccc'
-    setFrameWidth(497)
+    setFrameWidth('497px')
   }
 
   function handleClickCopyButton() {
     setCopyButton('Copied!')
-    navigator.clipboard.writeText(email)
+    navigator.clipboard.writeText(props.email)
     setTimeout(() => {
       setCopyButton('Copy')
-    }, "5000")
+    }, 5000)
   }
 
   return (
-    email ?
+    props.email ?
       <div
         className={styles.container}
-        style={{width: `calc(100% - ${visibleAreaSize}px - 5px)`}}
+        style={{ width: `calc(100% - ${props.visibleAreaSize}px - 5px)` }}
       >
         <div className={styles.tools}>
           <div className={styles.toolsButton}>
@@ -162,14 +169,14 @@ export default function Email({ path, email, visibleAreaSize, isResizing }){
                     className="btn btn-secondary"
                     disabled
                   >
-                    { developmentTime } minutes
+                    {developmentTime} minutes
                   </button>
                 </div>
-              :
-              <></>
+                :
+                <></>
             }
             <button
-              id = "botaoEmailOnAcid"
+              id="botaoEmailOnAcid"
               className={styles.botaoAcid}
               type="button"
               onClick={handleClickTestButton}
@@ -179,28 +186,28 @@ export default function Email({ path, email, visibleAreaSize, isResizing }){
               Email on acid
             </button>
             <button
-              id = "botao1"
+              id="botao1"
               className={styles.botao}
               type="button"
               onClick={handleClickShowButton}
-              //className="btn btn-outline-dark btn-sm"
+            //className="btn btn-outline-dark btn-sm"
             >
-              { showCodeEmailButton }
+              {showCodeEmailButton}
             </button>
-            { !isCodeView() ?
+            {!isCodeView() ?
               <div>
                 <button
-                id="botao2"
-                className={styles.botaoDesktop}
-                type="button"
-                //className="btn btn-light"
-                onClick={handleClickDesktopWidth}
+                  id="botao2"
+                  className={styles.botaoDesktop}
+                  type="button"
+                  //className="btn btn-light"
+                  onClick={handleClickDesktopWidth}
                 //data-bs-toggle="button"
                 //autoComplete="off"
                 //aria-pressed="true"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pc-display-horizontal" viewBox="0 0 16 16">
-                    <path d="M1.5 0A1.5 1.5 0 0 0 0 1.5v7A1.5 1.5 0 0 0 1.5 10H6v1H1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-5v-1h4.5A1.5 1.5 0 0 0 16 8.5v-7A1.5 1.5 0 0 0 14.5 0h-13Zm0 1h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .5-.5ZM12 12.5a.5.5 0 1 1 1 0 .5.5 0 0 1-1 0Zm2 0a.5.5 0 1 1 1 0 .5.5 0 0 1-1 0ZM1.5 12h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1ZM1 14.25a.25.25 0 0 1 .25-.25h5.5a.25.25 0 1 1 0 .5h-5.5a.25.25 0 0 1-.25-.25Z"/>
+                    <path d="M1.5 0A1.5 1.5 0 0 0 0 1.5v7A1.5 1.5 0 0 0 1.5 10H6v1H1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-5v-1h4.5A1.5 1.5 0 0 0 16 8.5v-7A1.5 1.5 0 0 0 14.5 0h-13Zm0 1h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .5-.5ZM12 12.5a.5.5 0 1 1 1 0 .5.5 0 0 1-1 0Zm2 0a.5.5 0 1 1 1 0 .5.5 0 0 1-1 0ZM1.5 12h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1ZM1 14.25a.25.25 0 0 1 .25-.25h5.5a.25.25 0 1 1 0 .5h-5.5a.25.25 0 0 1-.25-.25Z" />
                   </svg>
                 </button>
                 <button
@@ -221,26 +228,26 @@ export default function Email({ path, email, visibleAreaSize, isResizing }){
                 type="button"
                 onClick={handleClickCopyButton}
                 className="btn btn-light btn-sm"
-                style={{cursor: 'copy'}}
+                style={{ cursor: 'copy' }}
               >
-                { copyButton }
+                {copyButton}
               </button>
             }
           </div>
-          <span title={pathFixed}>{ pathFixed }</span>
+          <span title={pathFixed}>{pathFixed}</span>
         </div>
         <div className={styles.email}>
-          { isCodeView() ?
+          {isCodeView() ?
             <pre className={styles.code}>
-              <code className="language-html">{ email }</code>
+              <code className="language-html">{props.email}</code>
             </pre>
             :
-            <div style={{width: frameWidth}}>
-              <iframe id="mainFrame" srcDoc={emailFixed} frameBorder="0" width="100%" height="100%" style={{display: 'block'}} />
+            <div style={{ width: frameWidth }}>
+              <iframe id="mainFrame" srcDoc={emailFixed} frameBorder="0" width="100%" height="100%" style={{ display: 'block' }} />
             </div>
           }
         </div>
       </div>
-    : <></>
+      : <></>
   )
 }

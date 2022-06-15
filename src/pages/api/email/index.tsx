@@ -1,7 +1,7 @@
-import axios from "axios"
+import axios from 'axios'
 
 export default function handler(req, res) {
-  if (req.method === "POST") {
+  if (req.method === 'POST') {
     axios.get(req.body.email)
       .then(({ data }) => {
         res.status(200).json(data)

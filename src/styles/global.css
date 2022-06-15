@@ -13,7 +13,7 @@
   --btn: 0, 0, 0, .85;
   --code: #f4f4f4;
   --border-code: #888;
-  --link: rgba(0,0,0,.55);
+  --link: rgba(0, 0, 0, .55);
   --border-client-builder: #e5e7eb;
   --bg-client-hover-builder: #16184b0d;
   --text-client-builder: rgb(22, 24, 75);
@@ -36,9 +36,12 @@ body {
   color: var(--text);
 }
 
-body, input, textarea, button {
+body,
+input,
+textarea,
+button {
   font-family: "Inter", sans-serif !important;
-  font-size: 1rem ;
+  font-size: 1rem;
   font-weight: 400;
 }
 

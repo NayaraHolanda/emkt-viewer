@@ -5,7 +5,7 @@
   min-width: calc(100vw - 50%);
 }
 
-.botaoAcid{
+.botaoAcid {
   width: 140px;
   padding: 5px 0 5px 0;
   background: #ffffff;
@@ -18,12 +18,11 @@
   cursor: pointer;
 }
 
-.botaoAcid:hover{
+.botaoAcid:hover {
   background-color: #f0e9e9;
   color: #000000;
   border: solid 2px #000000;
 }
-
 
 .botao {
   width: 140px;
@@ -38,7 +37,7 @@
   cursor: pointer;
 }
 
-.botao:hover{
+.botao:hover {
   background: #f0e9e9;
   color: #000000;
   border: solid 2px #000000;
@@ -74,7 +73,7 @@
   border: solid 2px #18c1d8;
 }
 
-.darkmode:hover{
+.darkmode:hover {
   background: #f0e9e9;
   color: #000000;
   border: solid 2px #000000;
@@ -102,7 +101,8 @@
   margin-bottom: 0.5rem;
 }
 
-.tools button:first-child, .toolsButton button {
+.tools button:first-child,
+.toolsButton button {
   margin: 0 .5rem 0 0;
 }
 
