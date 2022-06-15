@@ -63,7 +63,7 @@
 
 .btn:hover,
 .btn:focus {
-  background-color: var(--btn-bg);
+  background-color: #18c1d8;
 }
 
 .btn::before {
@@ -99,4 +99,5 @@
 .file:focus {
   background-color: var(--btn-bg);
   color: var(--white);
+  border: 1px solid #18c1d8;
 }
