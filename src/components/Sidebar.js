@@ -62,23 +62,19 @@ export default function Sidebar() {
     return _data
   }
 
-  function checkImagesFolder(subList){
+  function checkImagesFolder(subList) {
     let foundHtml = false
-    let foundImageFolder = false
-    let imageFolder = []
+    let foundFolder = true
+    let allFiles = []
 
     subList.forEach((item) => {
       if (item.name.includes('.html')) {
         foundHtml = true
       }
-
-      if (item.type === 'dir') {
-        foundImageFolder = true
-        imageFolder = item
-      }
+      allFiles.push(item)
     })
 
-    foundHtml && foundImageFolder ? subList = subList.filter((item) => item.name !== imageFolder.name) : subList
+    foundHtml && foundFolder ? subList = subList.filter((item) => item.name !== allFiles.name && item.name.includes('.html')) : subList
 
     return subList
   }
@@ -136,7 +132,7 @@ export default function Sidebar() {
     } else {
       const downloadUrl = await requestFiles(path, 'file')
       axios.post('/api/email', { email: downloadUrl })
-        .then(({data}) => {
+        .then(({ data }) => {
           replaceStaticImages(path, data)
           setPathHtml(path)
         })
@@ -147,55 +143,55 @@ export default function Sidebar() {
     return list.map((item, index) => {
       return (
         item.type === 'dir' ?
-        <ul key={`${index}-${item.path}`} className={styles.mainList}>
-          <li>
-            <button
-              type="button"
-              aria-expanded="false"
-              data-bs-placement="right"
-              data-bs-target={`#${item.path.replaceAll(slugify, '-')}`}
-              data-bs-toggle="collapse"
-              title={item.name}
-              className={styles.btn}
-              onClick={() => handleOnClickFile(item)}
-            >
-              <span className={styles.ellipsis}>{item.name}</span>
-            </button>
-            <ul className={`collapse ${styles.list}`} id={item.path.replaceAll(slugify, '-')}>
-              <li>
-                {item.list && item.list.length ? createList(item.list) : ''}
-              </li>
-            </ul>
-          </li>
-        </ul>
-        :
-        <ul key={`${index}-${item.path}`} className={styles.mainList}>
-          <li>
-            <button
-              onClick={() => handleOnClickFile(item)}
-              data-bs-placement="right"
-              title={item.name}
-              className={styles.file}
-              key={`${index}-${item.path}`}
-            >
-              {item.name}
-            </button>
-            {item.list && item.list.length ? createList(item.list) : ''}
-          </li>
-        </ul>
+          <ul key={`${index}-${item.path}`} className={styles.mainList}>
+            <li>
+              <button
+                type="button"
+                aria-expanded="false"
+                data-bs-placement="right"
+                data-bs-target={`#${item.path.replaceAll(slugify, '-')}`}
+                data-bs-toggle="collapse"
+                title={item.name}
+                className={styles.btn}
+                onClick={() => handleOnClickFile(item)}
+              >
+                <span className={styles.ellipsis}>{item.name}</span>
+              </button>
+              <ul className={`collapse ${styles.list}`} id={item.path.replaceAll(slugify, '-')}>
+                <li>
+                  {item.list && item.list.length ? createList(item.list) : ''}
+                </li>
+              </ul>
+            </li>
+          </ul>
+          :
+          <ul key={`${index}-${item.path}`} className={styles.mainList}>
+            <li>
+              <button
+                onClick={() => handleOnClickFile(item)}
+                data-bs-placement="right"
+                title={item.name}
+                className={styles.file}
+                key={`${index}-${item.path}`}
+              >
+                {item.name}
+              </button>
+              {item.list && item.list.length ? createList(item.list) : ''}
+            </li>
+          </ul>
       )
     })
   }
 
   return (
-    <div style={{display: 'flex'}} id="mainArea">
+    <div style={{ display: 'flex' }} id="mainArea">
       <div
         ref={sidebarRef}
         className={styles.sidebar}
-        style={{width: sidebarWidth}}
+        style={{ width: sidebarWidth }}
       >
         <div>
-          { createList(list) }
+          {createList(list)}
         </div>
       </div>
       <div className={styles.divider} onMouseDown={startResizing}></div>
